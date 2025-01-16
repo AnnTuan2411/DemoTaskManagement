@@ -9,34 +9,30 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const response = await getEmployees();
       const currentDate = new Date();
-      const endDate = new Date(response.enddate);
-  
-      const employee = response.find(
-          (emp) => emp.username === username && emp.password === password && endDate>currentDate
-      );
-  
+      const employee = response.find((emp) => {
+        const endDate = new Date(emp.enddate); // Kiểm tra từng enddate trong mảng
+        return emp.username === username && emp.password === password && endDate > currentDate;
+      });
+
       if (employee) {
-  
         sessionStorage.setItem('employee_id', employee.employee_id);
         sessionStorage.setItem('role_id', employee.role_id);
         sessionStorage.setItem('fullname', employee.fullname);
-        if(employee.role_id === 1){
+        if (employee.role_id === 1) {
           navigate('/employee-managment');
-        }else if(employee.role_id === 2){
+        } else if (employee.role_id === 2) {
           navigate('/etask-list');
         }
-          
       } else {
-          // Nếu không tìm thấy, hiển thị cảnh báo
-          alert('Sai tên đăng nhập hoặc mật khẩu!');
+        alert('Sai tên đăng nhập hoặc mật khẩu!');
       }
-    }catch(error){
+    } catch (error) {
       console.error("Lỗi khi đăng nhập:", error);
     }
-    
+
   };
   return (
     <div className='wrapper'>

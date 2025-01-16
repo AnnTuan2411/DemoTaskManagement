@@ -11,9 +11,11 @@ const LoginForm = () => {
     e.preventDefault();
     try{
       const response = await getEmployees();
+      const currentDate = new Date();
+      const endDate = new Date(response.enddate);
   
       const employee = response.find(
-          (emp) => emp.username === username && emp.password === password
+          (emp) => emp.username === username && emp.password === password && endDate>currentDate
       );
   
       if (employee) {

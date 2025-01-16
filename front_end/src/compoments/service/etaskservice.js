@@ -33,7 +33,12 @@ export const AddEtasks = async (etaskData) => {
 
 export const UpdateEtasks = async (etask_id,etaskData) => {
     try {
-        const response = await axios.put(`http://127.0.0.1:5000/etask-managment/etask/${etask_id}`,etaskData);
+        const response = await axios.put(`http://127.0.0.1:5000/etask-managment/etask/${etask_id}`,etaskData),
+        {
+            headers: {
+                'Content-Type': "application/js",
+            },
+        };
         return response.data;
     } catch (error) {
         console.error("Error Update etasks:", error);

@@ -118,8 +118,22 @@ const EtaskList = () => {
         },
         {
             name: "Complete Date",
-            selector: (row) => row.completed_date? new Date(row.completed_date).toLocaleDateString("en-CA") : "Chưa xác định",
-            
+            selector: (row) => {
+                // Kiểm tra nếu completed_date nhỏ hơn startdate hoặc không có completed_date
+                if (new Date(row.completed_date) < new Date(row.startdate)) {
+                    return "Unfinished";
+                }
+                const completedDate = new Date(row.completed_date);
+                const formattedDate = completedDate.toLocaleString("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                });
+
+                return formattedDate;
+            },
             sortable: true,
         }
         ,

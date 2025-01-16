@@ -106,7 +106,7 @@ const EmployeeList = () => {
             selector: (row) =>
                 row.startdate
                     ? new Date(row.startdate).toLocaleDateString("vi-VN")
-                    : "Chưa xác định",
+                    : "Unknow",
             sortable: true,
         },
         {
@@ -114,7 +114,7 @@ const EmployeeList = () => {
             selector: (row) =>
                 row.enddate
                     ? new Date(row.enddate).toLocaleDateString("vi-VN")
-                    : "Chưa xác định",
+                    : "Unknow",
             sortable: true,
         },
         {
@@ -135,8 +135,8 @@ const EmployeeList = () => {
         {
             name: "Role",
             cell: (row) => {
-                const roles = { 1: "Admin", 2: "Nhân viên" };
-                return roles[row.role_id] || "Không xác định";
+                const roles = { 1: "Admin", 2: "Employee" };
+                return roles[row.role_id] || "Unknow";
             },
             sortable: true,
         },
@@ -373,6 +373,11 @@ const EmployeeList = () => {
                                             onChange={(e) =>
                                                 setCurrentRow({ ...currentRow, startdate: e.target.value })
                                             }
+                                            onFocus={(e) => {
+                                                if (!formData.startdate) {
+                                                    e.target.value = new Date().toLocaleDateString("en-CA");
+                                                }
+                                            }}
                                         />
                                     </label>
                                     <label>

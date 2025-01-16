@@ -58,7 +58,7 @@ const EtaskList = () => {
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [currentRow, setCurrentRow] = useState(null);
     const handleEdit = (row) => {
-        if(row.status===true){
+        if (row.status === true) {
             Swal.fire({
                 icon: "error",
                 title: "Unable to edit",
@@ -75,7 +75,7 @@ const EtaskList = () => {
         setCurrentRow(null); // Xóa dữ liệu hàng hiện tại
     };
     const handleSave = async (currentRow) => {
-        
+
         await UpdateEtasks(currentRow.etask_id, currentRow)
         setIsEditPopupOpen(false); // Đóng popup sau khi lưu
         window.location.reload();
@@ -138,22 +138,22 @@ const EtaskList = () => {
         },
         {
             name: "Task Name",
-            selector: (row) => row.taskname || "Chưa xác định",
+            selector: (row) => row.taskname || "Unknow",
             sortable: true,
         },
         {
             name: "Start Date",
-            selector: (row) => row.startdate ? new Date(row.startdate).toLocaleDateString('vi-VN') : "Chưa xác định",
+            selector: (row) => row.startdate ? new Date(row.startdate).toLocaleDateString('vi-VN') : "Unknow",
             sortable: true,
         },
         {
             name: "End Date",
-            selector: (row) => row.target_enddate ? new Date(row.target_enddate).toLocaleDateString('vi-VN') : "Chưa xác định",
+            selector: (row) => row.target_enddate ? new Date(row.target_enddate).toLocaleDateString('vi-VN') : "Unknow",
             sortable: true,
         },
         {
             name: "Create by",
-            selector: (row) => row.created_by || "Chưa xác định",
+            selector: (row) => row.created_by || "Unknow",
             sortable: true,
         },
         {
@@ -161,9 +161,18 @@ const EtaskList = () => {
             selector: (row) => {
                 // Kiểm tra nếu completed_date nhỏ hơn startdate hoặc không có completed_date
                 if (!row.completed_date || new Date(row.completed_date) < new Date(row.startdate)) {
-                    return "Chưa hoàn thành";
+                    return "Unfinished";
                 }
-                return row.completed_date;
+                const completedDate = new Date(row.completed_date);
+                const formattedDate = completedDate.toLocaleString("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                });
+
+                return formattedDate;
             },
             sortable: true,
         }

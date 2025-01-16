@@ -1,0 +1,21 @@
+.etask-manager {
+    display: flex;          /* Sử dụng Flexbox */
+    flex-direction: row;     /* Đặt các phần tử theo chiều ngang (mặc định) */
+    height: 100%;            /* Chiều cao toàn bộ */
+}
+
+.sidebar {
+    width: 250px;            /* Đặt chiều rộng cho sidebar */
+    background-color: salmon;
+    list-style-type: none;
+    padding: 20px;
+    position: fixed;         /* Nếu bạn muốn sidebar cố định */
+    top: 0;
+    left: 0;
+    height: 100%;            /* Chiều cao của sidebar */
+}
+
+.content {
+    flex: 1;                 /* Content sẽ chiếm phần còn lại */
+    padding: 20px;
+}
